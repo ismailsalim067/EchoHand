@@ -23,6 +23,13 @@ base_options = BaseOptions(model_asset_path="hand_landmarker.task",
 options = vision.HandLandmarkerOptions(base_options=base_options, num_hands=1)
 detector = vision.HandLandmarker.create_from_options(options)
 
+fingers = {
+    "index": [5, 6, 7, 8],
+    "middle": [9, 10, 11, 12],
+    "ring": [13, 14, 15, 16],
+    "pinky": [17, 18, 19, 20],
+}
+
 cap = cv2.VideoCapture(0)
 
 while True:
@@ -36,13 +43,13 @@ while True:
 
     if result.hand_landmarks:
         landmarks = result.hand_landmarks[0]
-        index_finger = [5, 6, 7, 8]
-        for i in range(len(index_finger) - 2):
-            before = index_finger[i]
-            joint = index_finger[i + 1]
-            after = index_finger[i + 2]
-            angle = calculate_angle(landmarks[before], landmarks[joint], landmarks[after])
-            print(f"before={before}, joint={joint}, after={after}, angle={angle}")
+        for finger_name, finger_points in fingers.items():
+            for i in range(len(finger_points) - 2):
+                before = finger_points[i]
+                joint = finger_points[i + 1]
+                after = finger_points[i + 2]
+                angle = calculate_angle(landmarks[before], landmarks[joint], landmarks[after])
+                print(f"{finger_name}: before={before}, joint={joint}, after={after}, angle={angle}")
 
 
     cv2.imshow("Hand Landmarks", frame)
