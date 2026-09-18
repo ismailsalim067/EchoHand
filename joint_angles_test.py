@@ -36,11 +36,13 @@ while True:
 
     if result.hand_landmarks:
         landmarks = result.hand_landmarks[0]
-        p6 = landmarks[6]
-        p7 = landmarks[7]
-        p8 = landmarks[8]
-        angle = calculate_angle(p6, p7, p8)
-        print(angle)
+        index_finger = [5, 6, 7, 8]
+        for i in range(len(index_finger) - 2):
+            before = index_finger[i]
+            joint = index_finger[i + 1]
+            after = index_finger[i + 2]
+            angle = calculate_angle(landmarks[before], landmarks[joint], landmarks[after])
+            print(f"before={before}, joint={joint}, after={after}, angle={angle}")
 
 
     cv2.imshow("Hand Landmarks", frame)
