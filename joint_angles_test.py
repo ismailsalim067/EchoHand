@@ -24,6 +24,7 @@ options = vision.HandLandmarkerOptions(base_options=base_options, num_hands=1)
 detector = vision.HandLandmarker.create_from_options(options)
 
 fingers = {
+    "thumb": [1,2,3,4],
     "index": [5, 6, 7, 8],
     "middle": [9, 10, 11, 12],
     "ring": [13, 14, 15, 16],
